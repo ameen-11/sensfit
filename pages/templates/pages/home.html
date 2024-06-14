@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    <div class="jumbotron mt-4">
+        <h1 class="display-4">Welcome to Our Website!</h1>
+        <p class="lead">This is a simple  website where you get insights using sensors .</p>
+        <hr class="my-4">
+        <a class="btn btn-primary btn-lg" href="{% url 'data' %}" role="button">Go to Admin Page</a>
+    </div>
+{% endblock %}

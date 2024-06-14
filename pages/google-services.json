@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "52007102153",
+    "firebase_url": "https://mini-project-4b372-default-rtdb.firebaseio.com",
+    "project_id": "mini-project-4b372",
+    "storage_bucket": "mini-project-4b372.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:52007102153:android:229057967b226a36c64f18",
+        "android_client_info": {
+          "package_name": "com.example.sensor_data"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "52007102153-psbrres6nlvska8vokfljcatf44s5560.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.sensor_data",
+            "certificate_hash": "807ced091c150fad6b06433cec4d4031f114970b"
+          }
+        },
+        {
+          "client_id": "52007102153-39gbe3eol4uu5q7apq7chkcu5ddo7rj6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBnKjtgCjTKY29BiFNMtCaACx9cH8V3hIk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "52007102153-39gbe3eol4uu5q7apq7chkcu5ddo7rj6.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "52007102153-srhj6osd29t2j00t4edqpaf9ap5v046c.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.sensorData.RunnerTests"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
