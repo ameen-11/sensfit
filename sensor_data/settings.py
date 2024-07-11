@@ -138,4 +138,4 @@ STATIC_ROOT = '/var/www/static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-CSRF_TRUSTED_ORIGINS = ['sensfit.nitk.ac.in', 'www.sensfit.nitk.ac.in', '10.14.0.104', '127.0.0.1',  'localhost']
+
