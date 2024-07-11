@@ -1,43 +1,44 @@
 import os
-# import firebase_admin
-# from firebase_admin import firestore, credentials
 from django.shortcuts import render
 from dotenv import load_dotenv
+from django.shortcuts import render, redirect
+from .forms import SensorDataForm
+from datetime import datetime
+from .models import SensorData
 
-# Load environment variables from .env file
-load_dotenv()
+def sensor_data(request):
+    if request.method == 'POST':
+        form = SensorDataForm(request.POST)
+        if form.is_valid():
+            sensor_data = form.save(commit=False)
+            sensor_data.timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            sensor_data.save()
+            return redirect('success')  # Redirect to a success page or another view
+    else:
+        form = SensorDataForm()
 
-# def initialize_firebase():
-#     """
-#     Initializes the Firebase Admin app using the service account key path from the environment variable.
-#     """
-#     service_account_key_path = os.getenv("FIREBASE_SERVICE_ACCOUNT_KEY")
-#     if not service_account_key_path:
-#         raise ValueError("Missing environment variable: FIREBASE_SERVICE_ACCOUNT_KEY")
-#     cred = credentials.Certificate(service_account_key_path)
-#     firebase_admin.initialize_app(cred)
-
-# # Call the initialization function outside the view
-# initialize_firebase()
-
-def data(request):
-    return render(request,'pages/home.html')
-    # try:
-    #     db = firestore.client()
-    #     users_ref = db.collection('sensordata')
-    #     docs = users_ref.limit(1000).get()  # Limit to 1000 entries
-
-    #     data = {}  # Initialize an empty dictionary to hold the data
-    #     for doc in docs:
-    #         data[doc.id] = doc.to_dict()
-
-    #     return render(request, 'pages/data.html', {'data': data})  # Pass data to the template
-    # except firestore.exceptions.NotFound:
-    #     return render(request, 'pages/error.html', context={'message': "No data found at the specified path."})
-    # except Exception as e:
-    #     # Handle exceptions appropriately
-    #     return render(request, 'pages/error.html', context={'message': f"An error occurred: {e}"})
+    return render(request, 'pages/sensor_data.html', {'form': form})
 
 
 def home(request):
     return render(request, 'pages/home.html')
+
+def data(request):
+    return render(request, 'pages/data.html')
+
+
+def display(request):
+    sensor_data = SensorData.objects.all()
+    return render(request, 'pages/display.html', {'sensor_data': sensor_data})
+
+def success(request):
+    if request.method == 'POST':
+        form = SensorDataForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('success')  # Redirect to a success page or another view
+    else:
+        form = SensorDataForm()
+    
+    return render(request, 'pages/sensor_data.html', {'form': form})
+   

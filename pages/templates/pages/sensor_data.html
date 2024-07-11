@@ -1,0 +1,152 @@
+
+{% extends 'base.html' %}
+
+{% block title %}
+    Sensor Data
+{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h1 class="card-title text-center mb-4">Enter Sensor Data</h1>
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="mb-3">
+                                        <label for="{{ form.ax.id_for_label }}" class="form-label">Ax</label>
+                                        <input type="number" class="form-control" id="{{ form.ax.id_for_label }}"
+                                               name="{{ form.ax.html_name }}" step="any">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="mb-3">
+                                        <label for="{{ form.ay.id_for_label }}" class="form-label">Ay</label>
+                                        <input type="number" class="form-control" id="{{ form.ay.id_for_label }}"
+                                               name="{{ form.ay.html_name }}" step="any">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="mb-3">
+                                        <label for="{{ form.az.id_for_label }}" class="form-label">Az</label>
+                                        <input type="number" class="form-control" id="{{ form.az.id_for_label }}"
+                                               name="{{ form.az.html_name }}" step="any">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="mb-3">
+                                        <label for="{{ form.pitch.id_for_label }}" class="form-label">Pitch</label>
+                                        <input type="number" class="form-control" id="{{ form.pitch.id_for_label }}"
+                                               name="{{ form.pitch.html_name }}" step="any">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="mb-3">
+                                        <label for="{{ form.roll.id_for_label }}" class="form-label">Roll</label>
+                                        <input type="number" class="form-control" id="{{ form.roll.id_for_label }}"
+                                               name="{{ form.roll.html_name }}" step="any">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="mb-3">
+                                        <label for="{{ form.azimuth.id_for_label }}" class="form-label">Azimuth</label>
+                                        <input type="number" class="form-control" id="{{ form.azimuth.id_for_label }}"
+                                               name="{{ form.azimuth.html_name }}" step="any">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="mb-3">
+                                        <label for="{{ form.avx.id_for_label }}" class="form-label">Avx</label>
+                                        <input type="number" class="form-control" id="{{ form.avx.id_for_label }}"
+                                               name="{{ form.avx.html_name }}" step="any">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="mb-3">
+                                        <label for="{{ form.avy.id_for_label }}" class="form-label">Avy</label>
+                                        <input type="number" class="form-control" id="{{ form.avy.id_for_label }}"
+                                               name="{{ form.avy.html_name }}" step="any">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="mb-3">
+                                        <label for="{{ form.avz.id_for_label }}" class="form-label">Avz</label>
+                                        <input type="number" class="form-control" id="{{ form.avz.id_for_label }}"
+                                               name="{{ form.avz.html_name }}" step="any">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="mb-3">
+                                        <label for="{{ form.mfx.id_for_label }}" class="form-label">Mfx</label>
+                                        <input type="number" class="form-control" id="{{ form.mfx.id_for_label }}"
+                                               name="{{ form.mfx.html_name }}" step="any">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="mb-3">
+                                        <label for="{{ form.mfy.id_for_label }}" class="form-label">Mfy</label>
+                                        <input type="number" class="form-control" id="{{ form.mfy.id_for_label }}"
+                                               name="{{ form.mfy.html_name }}" step="any">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="mb-3">
+                                        <label for="{{ form.mfz.id_for_label }}" class="form-label">Mfz</label>
+                                        <input type="number" class="form-control" id="{{ form.mfz.id_for_label }}"
+                                               name="{{ form.mfz.html_name }}" step="any">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="mb-3">
+                                        <label for="{{ form.latitude.id_for_label }}" class="form-label">Latitude</label>
+                                        <input type="number" class="form-control" id="{{ form.latitude.id_for_label }}"
+                                               name="{{ form.latitude.html_name }}" step="any">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="mb-3">
+                                        <label for="{{ form.longitude.id_for_label }}" class="form-label">Longitude</label>
+                                        <input type="number" class="form-control" id="{{ form.longitude.id_for_label }}"
+                                               name="{{ form.longitude.html_name }}" step="any">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="mb-3">
+                                        <label for="{{ form.altitude.id_for_label }}" class="form-label">Altitude</label>
+                                        <input type="number" class="form-control" id="{{ form.altitude.id_for_label }}"
+                                               name="{{ form.altitude.html_name }}" step="any">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="mb-3">
+                                        <label for="{{ form.hacc.id_for_label }}" class="form-label">Hacc</label>
+                                        <input type="number" class="form-control" id="{{ form.hacc.id_for_label }}"
+                                               name="{{ form.hacc.html_name }}" step="any">
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary mt-3">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
