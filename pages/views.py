@@ -5,7 +5,8 @@ from django.shortcuts import render, redirect
 from .forms import SensorDataForm
 from datetime import datetime
 from .models import SensorData
-
+from django.views.decorators.csrf import csrf_exempt
+@csrf_exempt
 def sensor_data(request):
     if request.method == 'POST':
         form = SensorDataForm(request.POST)
