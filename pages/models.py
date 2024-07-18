@@ -1,7 +1,12 @@
 from django.db import models
+from datetime import datetime
+
 
 class SensorData(models.Model):
-    timestamp = models.CharField(max_length=255)  # Assuming timestamp as a string
+    # Assuming timestamp as a string
+    timestamp = models.CharField(max_length=255,
+                                 default=datetime.now().isoformat())
+    userid = models.CharField(max_length=255)
     ax = models.FloatField(null=True, blank=True)
     ay = models.FloatField(null=True, blank=True)
     az = models.FloatField(null=True, blank=True)

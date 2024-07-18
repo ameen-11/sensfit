@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-%%)%p&d*+ml$%d#tymf@34mo^2!$c^(r*i$h=3j#hgx4fv_1=o
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'sensfit.nitk.ac.in','www.sensfit.nitk.ac.in','10.14.0.104','127.0.0.1','localhost'
+    'sensfit.nitk.ac.in', 'www.sensfit.nitk.ac.in', '10.14.0.104', '127.0.0.1', 'localhost'
 ]
 
 
@@ -88,9 +88,11 @@ DATABASES = {
         # "NAME": os.getenv("MYSQL_NAME","sensor"),
         # "USER": os.getenv("MYSQL_USER", "sensor"),
         # "PASSWORD": os.getenv("MYSQL_PASSWORD", "password"),
-        "NAME" :"sensor",
-        "USER" :"sensor",
-        "PASSWORD":"sensor@123",
+        "NAME": "sensor",
+        "USER": "sensor",
+        "PASSWORD": "sensor@123",
+        # "PASSWORD": ";[m!sSd=$Xyy2F<ww#wm",
+        # ;[m!sSd=$Xyy2F<ww#wm
         "HOST": "127.0.0.1",
         "PORT": "3306",
         "OPTIONS": {"init_command": "SET sql_mode='STRICT_TRANS_TABLES'"},
@@ -132,10 +134,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL ='/static/'
+STATIC_URL = '/static/'
 STATIC_ROOT = '/var/www/static/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
