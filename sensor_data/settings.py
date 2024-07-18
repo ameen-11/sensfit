@@ -90,8 +90,8 @@ DATABASES = {
         # "PASSWORD": os.getenv("MYSQL_PASSWORD", "password"),
         "NAME": "sensor",
         "USER": "sensor",
-        # "PASSWORD": "sensor@123",
-        "PASSWORD": ";[m!sSd=$Xyy2F<ww#wm",
+        "PASSWORD": "sensor@123",
+        # "PASSWORD": ";[m!sSd=$Xyy2F<ww#wm",
         # ;[m!sSd=$Xyy2F<ww#wm
         "HOST": "127.0.0.1",
         "PORT": "3306",
