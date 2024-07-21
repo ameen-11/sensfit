@@ -63,6 +63,7 @@ def sendData(request):
                     'error': 'userID field is required'
                 }, status=400)
 
+            print(data)
             # Create a new SensorData object
             sensor_data = SensorData(
                 timestamp=data.get('timestamp'),
