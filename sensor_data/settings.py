@@ -29,7 +29,8 @@ SECRET_KEY = 'django-insecure-%%)%p&d*+ml$%d#tymf@34mo^2!$c^(r*i$h=3j#hgx4fv_1=o
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'sensfit.nitk.ac.in', 'www.sensfit.nitk.ac.in', '10.14.0.104', '127.0.0.1', 'localhost'
+    'sensfit.nitk.ac.in', 'www.sensfit.nitk.ac.in', '10.14.0.104', '127.0.0.1',
+    'localhost', '10.0.2.2'
 ]
 
 

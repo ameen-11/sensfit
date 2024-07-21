@@ -15,6 +15,7 @@
                     <thead class="thead-dark">
                         <tr>
                             <th scope="col">Timestamp</th>
+                            <th scope="col">User ID</th>
                             <th scope="col">Ax</th>
                             <th scope="col">Ay</th>
                             <th scope="col">Az</th>
@@ -37,6 +38,7 @@
                         {% for data in sensor_data %}
                         <tr>
                             <td>{{ data.timestamp }}</td>
+                            <td>{{ data.userid }}</td>
                             <td>{{ data.ax }}</td>
                             <td>{{ data.ay }}</td>
                             <td>{{ data.az }}</td>
