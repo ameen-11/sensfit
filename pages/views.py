@@ -83,6 +83,7 @@ def sendData(request):
                 longitude=data.get('longitude'), altitude=data.get('altitude'),
                 hacc=data.get('hacc')
             )
+            print(sensor_data)
 
             # Save the object to the database
             sensor_data.save()
