@@ -1,3 +1,4 @@
+from typing import Optional
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
@@ -52,11 +53,12 @@ def success(request):
 
 @csrf_exempt
 def sendData(request):
+    print(request)
     if request.method == 'POST':
         try:
             data = json.loads(request.body.decode('utf-8'))
 
-            # Assuming 'timestamp' is a required field
+            # Assuming 'userid' is a required field
             userID = data.get('userid')
             if userID is None:
                 return JsonResponse({
@@ -100,4 +102,38 @@ def sendData(request):
     else:
         return JsonResponse({
             'error': 'Only POST requests are allowed'
+        }, status=405)
+
+
+@csrf_exempt
+def getData(request):
+    if request.method == 'GET':
+        # Get 'userid' from query parameters
+        userID = request.GET.get('userid')
+        print("server is hit with get req")
+        if not userID:
+            return JsonResponse({
+                'error': 'userID field is required'
+            }, status=400)
+
+        # Query the SensorData model for the latest 100 entries by the user
+        sensor_data = SensorData.objects.filter(
+            userid=userID
+        ).order_by('-timestamp')[:100]
+
+        # Convert the queryset to a list of dictionaries
+        sensor_data_list = list(sensor_data.values(
+            'timestamp', 'userid', 'ax', 'ay', 'az', 'pitch', 'roll',
+            'azimuth', 'avx', 'avy', 'avz', 'mfx', 'mfy', 'mfz',
+            'latitude', 'longitude', 'altitude', 'hacc'
+        ))
+
+        # Return the data as JSON
+        return JsonResponse({
+            'data': sensor_data_list
+        }, status=200)
+
+    else:
+        return JsonResponse({
+            'error': 'Only GET requests are allowed'
         }, status=405)
