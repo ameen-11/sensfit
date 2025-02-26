@@ -52,51 +52,47 @@ def success(request):
 
 @csrf_exempt
 def sendData(request):
-    if request.method == 'POST':
-        try:
-            data = json.loads(request.body.decode('utf-8'))
+    try:
+        data = json.loads(request.body.decode('utf-8'))
 
-            # Assuming 'timestamp' is a required field
-            userID = data.get('userid')
-            if userID is None:
-                return JsonResponse({
-                    'error': 'userID field is required'
-                }, status=400)
-
-            # Create a new SensorData object
-            sensor_data = SensorData(
-                timestamp=data.get('timestamp'),
-                userid=data.get('userid'),
-                ax=data.get('ax'),
-                ay=data.get('ay'),
-                az=data.get('az'),
-                pitch=data.get('pitch'),
-                roll=data.get('roll'),
-                azimuth=data.get('azimuth'),
-                avx=data.get('avx'),
-                avy=data.get('avy'),
-                avz=data.get('avz'),
-                mfx=data.get('mfx'),
-                mfy=data.get('mfy'),
-                mfz=data.get('mfz'),
-                latitude=data.get('latitude'),
-                longitude=data.get('longitude'), altitude=data.get('altitude'),
-                hacc=data.get('hacc')
-            )
-
-            # Save the object to the database
-            sensor_data.save()
-
+        # Assuming 'timestamp' is a required field
+        userID = data.get('userid')
+        if userID is None:
             return JsonResponse({
-                'message': 'Data stored successfully'
-            }, status=201)
-
-        except json.JSONDecodeError as e:
-            return JsonResponse({
-                'error': 'Invalid JSON format ' + str(e)
+                'error': 'userID field is required'
             }, status=400)
 
-    else:
+        # Create a new SensorData object
+        sensor_data = SensorData(
+            timestamp=data.get('timestamp'),
+            userid=data.get('userid'),
+            ax=data.get('ax'),
+            ay=data.get('ay'),
+            az=data.get('az'),
+            pitch=data.get('pitch'),
+            roll=data.get('roll'),
+            azimuth=data.get('azimuth'),
+            avx=data.get('avx'),
+            avy=data.get('avy'),
+            avz=data.get('avz'),
+            mfx=data.get('mfx'),
+            mfy=data.get('mfy'),
+            mfz=data.get('mfz'),
+            latitude=data.get('latitude'),
+            longitude=data.get('longitude'),
+            altitude=data.get('altitude'),
+            hacc=data.get('hacc')
+        )
+
+        # Save the object to the database
+        sensor_data.save()
+
         return JsonResponse({
-            'error': 'Only POST requests are allowed'
-        }, status=405)
+            'message': 'Data stored successfully'
+        }, status=201)
+
+    except json.JSONDecodeError as e:
+        return JsonResponse({
+            'error': 'Invalid JSON format ' + str(e)
+        }, status=400)
+
