@@ -104,7 +104,8 @@ def sendData(request):
 @csrf_exempt
 def getMaxData(request):
     if request.method == 'GET':
-        max_values = SensorData.objects.aggregate(
+        last_10_entries = SensorData.objects.order_by('-timestamp')[:10]
+        max_values = last_10_entries.aggregate(
             max_ax=Max('ax'),
             max_ay=Max('ay'),
             max_az=Max('az'),
@@ -132,7 +133,8 @@ def getMaxData(request):
 @csrf_exempt
 def getMinData(request):
     if request.method == 'GET':
-        min_values = SensorData.objects.aggregate(
+        last_10_entries = SensorData.objects.order_by('-timestamp')[:10]
+        min_values = last_10_entries.aggregate(
             min_ax=Min('ax'),
             min_ay=Min('ay'),
             min_az=Min('az'),
