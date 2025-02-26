@@ -87,19 +87,11 @@ def sendData(request):
         # Save the object to the database
         sensor_data.save()
 
-        return JsonResponse({
-<<<<<<< HEAD
-            'message': 'Data stored successfully'
-        }, status=201)
-
-    except json.JSONDecodeError as e:
-        return JsonResponse({
-            'error': 'Invalid JSON format ' + str(e)
-        }, status=400)
-
-=======
-            'error': 'Only POST requests are allowed'
-        }, status=405)
+        return JsonResponse({'status': 'success'}, status=201)
+    except json.JSONDecodeError:
+        return JsonResponse({'error': 'Invalid JSON'}, status=400)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
 
 @csrf_exempt
 def getMaxData(request):
@@ -157,4 +149,3 @@ def getMinData(request):
         return JsonResponse({
             'error': 'Only GET requests are allowed'
         }, status=405)
->>>>>>> 6adca0beda04c070b61adbbe5b815ffb5b68b7d3
