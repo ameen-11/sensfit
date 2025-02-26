@@ -6,7 +6,7 @@ import json
 
 from .forms import SensorDataForm
 from .models import SensorData
-
+from django.db.models import Max,Min
 
 @csrf_exempt
 def sensor_data(request):
@@ -88,6 +88,7 @@ def sendData(request):
         sensor_data.save()
 
         return JsonResponse({
+<<<<<<< HEAD
             'message': 'Data stored successfully'
         }, status=201)
 
@@ -96,3 +97,64 @@ def sendData(request):
             'error': 'Invalid JSON format ' + str(e)
         }, status=400)
 
+=======
+            'error': 'Only POST requests are allowed'
+        }, status=405)
+
+@csrf_exempt
+def getMaxData(request):
+    if request.method == 'GET':
+        last_10_entries = SensorData.objects.order_by('-timestamp')[:10]
+        max_values = last_10_entries.aggregate(
+            max_ax=Max('ax'),
+            max_ay=Max('ay'),
+            max_az=Max('az'),
+            max_pitch=Max('pitch'),
+            max_roll=Max('roll'),
+            max_azimuth=Max('azimuth'),
+            max_avx=Max('avx'),
+            max_avy=Max('avy'),
+            max_avz=Max('avz'),
+            max_mfx=Max('mfx'),
+            max_mfy=Max('mfy'),
+            max_mfz=Max('mfz'),
+            max_latitude=Max('latitude'),
+            max_longitude=Max('longitude'),
+            max_altitude=Max('altitude'),
+            max_hacc=Max('hacc')
+        )
+        return JsonResponse(max_values, status=200)
+    else:
+        return JsonResponse({
+            'error': 'Only GET requests are allowed'
+        }, status=405)
+        
+        
+@csrf_exempt
+def getMinData(request):
+    if request.method == 'GET':
+        last_10_entries = SensorData.objects.order_by('-timestamp')[:10]
+        min_values = last_10_entries.aggregate(
+            min_ax=Min('ax'),
+            min_ay=Min('ay'),
+            min_az=Min('az'),
+            min_pitch=Min('pitch'),
+            min_roll=Min('roll'),
+            min_azimuth=Min('azimuth'),
+            min_avx=Min('avx'),
+            min_avy=Min('avy'),
+            min_avz=Min('avz'),
+            min_mfx=Min('mfx'),
+            min_mfy=Min('mfy'),
+            min_mfz=Min('mfz'),
+            min_latitude=Min('latitude'),
+            min_longitude=Min('longitude'),
+            min_altitude=Min('altitude'),
+            min_hacc=Min('hacc')
+        )
+        return JsonResponse(min_values, status=200)
+    else:
+        return JsonResponse({
+            'error': 'Only GET requests are allowed'
+        }, status=405)
+>>>>>>> 6adca0beda04c070b61adbbe5b815ffb5b68b7d3
