@@ -8,6 +8,9 @@ from .forms import SensorDataForm
 from .models import SensorData
 from django.db.models import Max,Min
 from django.core.serializers import serialize
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login
+from django.contrib import messages
 
 @csrf_exempt
 def sensor_data(request):
@@ -28,6 +31,26 @@ def sensor_data(request):
 def home(request):
     return render(request, 'pages/home.html')
 
+def login(request):
+    return render(request, 'pages/login.html')
+
+def login_view(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        role = request.POST['role']
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            if role == 'admin' and user.is_staff:
+                return redirect('pages/home.html')  
+            elif role == 'user':
+                return redirect('success.html')  
+            else:
+                messages.error(request, 'Invalid role for this user.')
+        else:
+            messages.error(request, 'Invalid username or password.')
+    return render(request, 'pages/home.html')
 
 def data(request):
     return render(request, 'pages/data.html')
