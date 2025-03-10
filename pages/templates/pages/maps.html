@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block title %}Maps{% endblock %}
+
+{% block content %}
+<div class="container-fluid mt-5">
+    <h1 class="display-4 text-center mt-5">Maps</h1>
+    <div id="map" style="height: 80vh; width: 100%;"></div>
+</div>
+
+<!-- Leaflet CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+<!-- Leaflet JavaScript -->
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize the map
+        var map = L.map('map');
+
+        // Add OpenStreetMap tiles
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Fetch sensor data
+        var sensorData = JSON.parse('{{ sensor_data|safe }}');
+        var latlngs = [];
+        sensorData.forEach(function(entry) {
+            var latitude = entry.fields.latitude;
+            var longitude = entry.fields.longitude;
+            var timestamp = entry.fields.timestamp;
+            var ax = entry.fields.ax;
+            var ay = entry.fields.ay;
+            var az = entry.fields.az;
+            var pitch = entry.fields.pitch;
+            var roll = entry.fields.roll;
+            var azimuth = entry.fields.azimuth;
+            var avx = entry.fields.avx;
+            var avy = entry.fields.avy;
+            var avz = entry.fields.avz;
+            var mfx = entry.fields.mfx;
+            var mfy = entry.fields.mfy;
+            var mfz = entry.fields.mfz;
+            var altitude = entry.fields.altitude;
+            var hacc = entry.fields.hacc;
+
+            // Add a marker for each data point
+            if (latitude && longitude) {
+                var popupContent = `
+                    <b>Timestamp:</b> ${timestamp}<br>
+                    <b>ax:</b> ${ax}<br>
+                    <b>ay:</b> ${ay}<br>
+                    <b>az:</b> ${az}<br>
+                    <b>pitch:</b> ${pitch}<br>
+                    <b>roll:</b> ${roll}<br>
+                    <b>azimuth:</b> ${azimuth}<br>
+                    <b>avx:</b> ${avx}<br>
+                    <b>avy:</b> ${avy}<br>
+                    <b>avz:</b> ${avz}<br>
+                    <b>mfx:</b> ${mfx}<br>
+                    <b>mfy:</b> ${mfy}<br>
+                    <b>mfz:</b> ${mfz}<br>
+                    <b>altitude:</b> ${altitude}<br>
+                    <b>hacc:</b> ${hacc}
+                `;
+                L.marker([latitude, longitude]).addTo(map)
+                    .bindPopup(popupContent);
+                latlngs.push([latitude, longitude]);
+            }
+        });
+
+        // Calculate the bounding box and set the map view
+        if (latlngs.length > 0) {
+            var bounds = L.latLngBounds(latlngs);
+            map.fitBounds(bounds);
+        } else {
+            map.setView([0, 0], 2); // Default view if no points are available
+        }
+    });
+</script>
+{% endblock %}

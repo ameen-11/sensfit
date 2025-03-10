@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import data, home, sensor_data, success, display, sendData,getMaxData,getMinData
+from .views import data, home, sensor_data, success, display, sendData,getMaxData,getMinData,charts,maps
 
 urlpatterns = [
     path('', home, name='home'),
@@ -10,4 +10,6 @@ urlpatterns = [
     path('send_data/', sendData, name='sendData'),
     path('get-max-data/',getMaxData,name='getMaxData'),
     path('get-min-data/',getMinData,name='getMinData'),
+    path('charts/',charts,name='charts'),
+    path('maps/',maps,name='maps'),
 ]

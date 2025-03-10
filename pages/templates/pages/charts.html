@@ -1,0 +1,249 @@
+{% extends 'base.html' %}
+
+{% block title %}Charts{% endblock %}
+
+{% block content %}
+<div class="container-fluid mt-5">
+    <h1 class="display-4 text-center mt-5">Charts</h1>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5>Select Data Fields</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-check">
+                        <input class="form-check-input field-checkbox" type="checkbox" value="ax" id="ax">
+                        <label class="form-check-label" for="ax">ax</label>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-check">
+                        <input class="form-check-input field-checkbox" type="checkbox" value="ay" id="ay">
+                        <label class="form-check-label" for="ay">ay</label>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-check">
+                        <input class="form-check-input field-checkbox" type="checkbox" value="az" id="az">
+                        <label class="form-check-label" for="az">az</label>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-check">
+                        <input class="form-check-input field-checkbox" type="checkbox" value="pitch" id="pitch">
+                        <label class="form-check-label" for="pitch">pitch</label>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-check">
+                        <input class="form-check-input field-checkbox" type="checkbox" value="roll" id="roll">
+                        <label class="form-check-label" for="roll">roll</label>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-check">
+                        <input class="form-check-input field-checkbox" type="checkbox" value="azimuth" id="azimuth">
+                        <label class="form-check-label" for="azimuth">azimuth</label>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-check">
+                        <input class="form-check-input field-checkbox" type="checkbox" value="avx" id="avx">
+                        <label class="form-check-label" for="avx">avx</label>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-check">
+                        <input class="form-check-input field-checkbox" type="checkbox" value="avy" id="avy">
+                        <label class="form-check-label" for="avy">avy</label>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-check">
+                        <input class="form-check-input field-checkbox" type="checkbox" value="avz" id="avz">
+                        <label class="form-check-label" for="avz">avz</label>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-check">
+                        <input class="form-check-input field-checkbox" type="checkbox" value="mfx" id="mfx">
+                        <label class="form-check-label" for="mfx">mfx</label>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-check">
+                        <input class="form-check-input field-checkbox" type="checkbox" value="mfy" id="mfy">
+                        <label class="form-check-label" for="mfy">mfy</label>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-check">
+                        <input class="form-check-input field-checkbox" type="checkbox" value="mfz" id="mfz">
+                        <label class="form-check-label" for="mfz">mfz</label>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-check">
+                        <input class="form-check-input field-checkbox" type="checkbox" value="latitude" id="latitude">
+                        <label class="form-check-label" for="latitude">latitude</label>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-check">
+                        <input class="form-check-input field-checkbox" type="checkbox" value="longitude" id="longitude">
+                        <label class="form-check-label" for="longitude">longitude</label>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-check">
+                        <input class="form-check-input field-checkbox" type="checkbox" value="altitude" id="altitude">
+                        <label class="form-check-label" for="altitude">altitude</label>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-check">
+                        <input class="form-check-input field-checkbox" type="checkbox" value="hacc" id="hacc">
+                        <label class="form-check-label" for="hacc">hacc</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="chart-container" style="position: relative; height: 80vh; width: 100%;">
+        <canvas id="sensorChart"></canvas>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment@1.0.0"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@1.0.0"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var sensorData = JSON.parse('{{ sensor_data|safe }}');
+        var timestamps = sensorData.map(entry => entry.fields.timestamp);
+        var dataFields = {
+            ax: sensorData.map(entry => entry.fields.ax),
+            ay: sensorData.map(entry => entry.fields.ay),
+            az: sensorData.map(entry => entry.fields.az),
+            pitch: sensorData.map(entry => entry.fields.pitch),
+            roll: sensorData.map(entry => entry.fields.roll),
+            azimuth: sensorData.map(entry => entry.fields.azimuth),
+            avx: sensorData.map(entry => entry.fields.avx),
+            avy: sensorData.map(entry => entry.fields.avy),
+            avz: sensorData.map(entry => entry.fields.avz),
+            mfx: sensorData.map(entry => entry.fields.mfx),
+            mfy: sensorData.map(entry => entry.fields.mfy),
+            mfz: sensorData.map(entry => entry.fields.mfz),
+            latitude: sensorData.map(entry => entry.fields.latitude),
+            longitude: sensorData.map(entry => entry.fields.longitude),
+            altitude: sensorData.map(entry => entry.fields.altitude),
+            hacc: sensorData.map(entry => entry.fields.hacc)
+        };
+
+        var ctx = document.getElementById('sensorChart').getContext('2d');
+        var sensorChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: timestamps,
+                datasets: []
+            },
+            options: {
+                scales: {
+                    x: {
+                        type: 'time',
+                        time: {
+                            unit: 'second'
+                        },
+                        title: {
+                            display: true,
+                            text: 'Timestamp',
+                            font: {
+                                size: 16,
+                                weight: 'bold'
+                            },
+                           
+                        },
+                        ticks: {
+                            
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Values',
+                            font: {
+                                size: 16,
+                                weight: 'bold'
+                            },
+                            
+                        },
+                        ticks: {
+                            
+                        }
+                    }
+                },
+                plugins: {
+                    zoom: {
+                        pan: {
+                            enabled: true,
+                            mode: 'xy',
+                            speed: 20 // Adjust the speed as needed
+                        },
+                        zoom: {
+                            wheel: {
+                                enabled: true
+                            },
+                            drag: {
+                                enabled: true
+                            },
+                            mode: 'xy'
+                        }
+                    }
+                }
+
+            }
+        });
+
+        document.querySelectorAll('.field-checkbox').forEach(function(checkbox) {
+            checkbox.addEventListener('change', function() {
+                var field = checkbox.value;
+                if (checkbox.checked) {
+                    sensorChart.data.datasets.push({
+                        label: field,
+                        data: dataFields[field],
+                        borderColor: getRandomColor(),
+                        borderWidth: 1,
+                        fill: false
+                    });
+                } else {
+                    sensorChart.data.datasets = sensorChart.data.datasets.filter(dataset => dataset.label !== field);
+                }
+                sensorChart.update();
+            });
+        });
+
+        document.addEventListener('keydown', function(event) {
+            const panOptions = sensorChart.options.plugins.zoom.pan;
+            if (event.key === 'ArrowLeft') {
+                sensorChart.pan({ x: -panOptions.speed, y: 0 });
+            } else if (event.key === 'ArrowRight') {
+                sensorChart.pan({ x: panOptions.speed, y: 0 });
+            }
+        });
+
+        function getRandomColor() {
+            var letters = '0123456789ABCDEF';
+            var color = '#';
+            for (var i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+    });
+</script>
+{% endblock %}

@@ -7,6 +7,7 @@ import json
 from .forms import SensorDataForm
 from .models import SensorData
 from django.db.models import Max,Min
+from django.core.serializers import serialize
 
 @csrf_exempt
 def sensor_data(request):
@@ -149,3 +150,17 @@ def getMinData(request):
         return JsonResponse({
             'error': 'Only GET requests are allowed'
         }, status=405)
+
+def charts(request):
+    sensor_data = SensorData.objects.all().order_by('-timestamp')[:10]  # Fetch the last 10 entries
+    sensor_data_json = serialize('json', sensor_data, fields=(
+        'timestamp', 'ax', 'ay', 'az', 'pitch', 'roll', 'azimuth', 'avx', 'avy', 'avz', 'mfx', 'mfy', 'mfz', 'latitude', 'longitude', 'altitude', 'hacc'
+    ))
+    return render(request, 'pages/charts.html', {'sensor_data': sensor_data_json})
+
+def maps(request):
+    sensor_data = SensorData.objects.all().order_by('-timestamp')[:10]  # Fetch the last 10 entries
+    sensor_data_json = serialize('json', sensor_data, fields=(
+        'timestamp', 'ax', 'ay', 'az', 'pitch', 'roll', 'azimuth', 'avx', 'avy', 'avz', 'mfx', 'mfy', 'mfz', 'latitude', 'longitude', 'altitude', 'hacc'
+    ))
+    return render(request, 'pages/maps.html', {'sensor_data': sensor_data_json})
